@@ -14,6 +14,8 @@ public class ClickController : MonoBehaviour
     public Levels levels;
     public int level = 0;
 
+    public ParticleSystem particleSystem;
+
     private Vector3 heartStartPosition;
     private Coroutine coroutine;
 
@@ -24,6 +26,10 @@ public class ClickController : MonoBehaviour
         heartImage.color = levels.levels[level].color;
         heartStartPosition = heartPivot.position;
         TextUpdate();
+
+        points = PlayerPrefs.GetInt("Score", 0);
+        TextUpdate();
+        HeartUpdate();
     }
 
     void Update()
@@ -35,7 +41,19 @@ public class ClickController : MonoBehaviour
             HeartUpdate();
             if (coroutine != null) StopCoroutine(coroutine);            
             coroutine = StartCoroutine(ClickAnimation());
+            particleSystem.Play();
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PlayerPrefs.SetInt("Score", points);
+            Application.Quit();
+        }
+    }
+
+    private void OnApplicationQuit()
+    {
+        PlayerPrefs.SetInt("Score", points);
     }
 
     private void TextUpdate()
