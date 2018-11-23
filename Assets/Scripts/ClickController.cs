@@ -30,10 +30,8 @@ public class ClickController : MonoBehaviour
         heartMask.sizeDelta = new Vector2(heartMask.sizeDelta.x, 0);
         heartImage.color = levels.levels[level].color;
         heartStartPosition = heartPivot.position;
-        TextUpdate();
 
         points = PlayerPrefs.GetInt("Score", 0);
-        TextUpdate();
         HeartUpdate();
     }
 
@@ -41,49 +39,45 @@ public class ClickController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
-            {
-                points++;
-                TextUpdate();
-                HeartUpdate();
-                if (coroutine != null) StopCoroutine(coroutine);
-                coroutine = StartCoroutine(ClickAnimation());
-                particle.Play();
+            points++;
+            HeartUpdate();
+            if (coroutine != null) StopCoroutine(coroutine);
+            coroutine = StartCoroutine(ClickAnimation());
+            particle.Play();
 
-                PlayerPrefs.SetInt("Score", points);
-                PlayGamesPlatform.Instance.ReportScore(points, liderboardName, (bool success) =>
+            PlayerPrefs.SetInt("Score", points);
+            PlayGamesPlatform.Instance.ReportScore(points, liderboardName, (bool success) =>
+            {
+                // handle success or failure
+                if (success)
                 {
-                    // handle success or failure
-                    if (success)
-                    {
-                        Debug.Log("Улетел");
-                    }
-                    else
-                    {
-                        Debug.Log("Не улетел");
-                    }
-                });
-            }
+                    Debug.Log("Улетел");
+                }
+                else
+                {
+                    Debug.Log("Не улетел");
+                }
+            });
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             PlayerPrefs.SetInt("Score", points);
-            Social.ReportScore(points, liderboardName, (bool success) => {
-                // handle success or failure
+            Social.ReportScore(points, liderboardName, (bool success) =>
+            {
+                
             });
             Application.Quit();
         }
     }
 
-    private void OnApplicationQuit()
+    private void OnApplicationPause(bool pause)
     {
         PlayerPrefs.SetInt("Score", points);
-    }
+        Social.ReportScore(points, liderboardName, (bool success) =>
+        {
 
-    private void TextUpdate()
-    {
-        pointCountText.text = points.ToString();
+        });
     }
 
     private void HeartUpdate()
@@ -94,13 +88,14 @@ public class ClickController : MonoBehaviour
             heartMask.sizeDelta = new Vector2(heartMask.sizeDelta.x, height);
         }
         else //New level
-        {            
+        {
             level++;
             heartImage.color = levels.levels[level].color;
             heartMask.sizeDelta = new Vector2(heartMask.sizeDelta.x, 0);
             float height = startHeight * (float)points / levels.levels[level].difficulty;
             heartMask.sizeDelta = new Vector2(heartMask.sizeDelta.x, height);
-        }       
+        }
+        pointCountText.text = points.ToString();
     }
 
     public void GetLiderBoardBtn()
