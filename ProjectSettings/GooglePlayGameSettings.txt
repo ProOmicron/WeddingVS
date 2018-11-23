@@ -1,0 +1,9 @@
+lastUpgrade=00954
+proj.pluginVersion=0.9.54
+proj.AppId=253782037958
+proj.classDir=Assets
+proj.ConstantsClassName=GPGSIds
+and.ResourceData=%3c%3fxml+version%3d%221.0%22+encoding%3d%22utf-8%22%3f%3e%0d%0a%3c%21--%0d%0aGoogle+Play+game+services+IDs.%0d%0aSave+this+file+as+res%2fvalues%2fgames-ids.xml+in+your+project.%0d%0a--%3e%0d%0a%3cresources%3e%0d%0a++%3c%21--+app_id+--%3e%0d%0a++%3cstring+name%3d%22app_id%22+translatable%3d%22false%22%3e253782037958%3c%2fstring%3e%0d%0a++%3c%21--+package_name+--%3e%0d%0a++%3cstring+name%3d%22package_name%22+translatable%3d%22false%22%3ecom.TyanStudio.Wadding%3c%2fstring%3e%0d%0a++%3c%21--+leaderboard+Score+--%3e%0d%0a++%3cstring+name%3d%22leaderboard_score%22+translatable%3d%22false%22%3eCgkIxqvatLEHEAIQAA%3c%2fstring%3e%0d%0a%3c%2fresources%3e%0d%0a
+and.ClientId=253782037958-kd0l2rcfogjun1abtrvoc37dp8i2293h.apps.googleusercontent.com
+android.SetupDone=true
+and.BundleId=com.TyanStudio.Wadding

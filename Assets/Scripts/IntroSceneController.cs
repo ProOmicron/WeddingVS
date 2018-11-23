@@ -2,6 +2,7 @@
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
+using GooglePlayGames;
 
 public class IntroSceneController : MonoBehaviour
 {
@@ -9,17 +10,24 @@ public class IntroSceneController : MonoBehaviour
 
     void Start()
     {
+        PlayGamesPlatform.Activate();
+        Social.localUser.Authenticate((bool success) =>
+        {
+            if (success)
+            {
+                Debug.Log("Авторизация прошла успешно");
+            }
+            else
+            {
+                Debug.Log("Ошибка авторизации");
+            }
+        });
         StartCoroutine(TextFade());
-    }
-
-    void Update()
-    {
-    
     }
 
     private IEnumerator TextFade()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(2);
         float timer = 0;
         while (timer < 1)
         {

@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using GooglePlayGames;
+using GooglePlayGames.BasicApi;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,10 +16,13 @@ public class ClickController : MonoBehaviour
     public Levels levels;
     public int level = 0;
 
-    public ParticleSystem particleSystem;
+    public ParticleSystem particle;
 
     private Vector3 heartStartPosition;
     private Coroutine coroutine;
+
+    private readonly string liderboardName = "CgkIxqvatLEHEAIQAA";
+
 
     void Start()
     {
@@ -36,17 +41,37 @@ public class ClickController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            points++;
-            TextUpdate();
-            HeartUpdate();
-            if (coroutine != null) StopCoroutine(coroutine);            
-            coroutine = StartCoroutine(ClickAnimation());
-            particleSystem.Play();
+            if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+            {
+                points++;
+                TextUpdate();
+                HeartUpdate();
+                if (coroutine != null) StopCoroutine(coroutine);
+                coroutine = StartCoroutine(ClickAnimation());
+                particle.Play();
+
+                PlayerPrefs.SetInt("Score", points);
+                PlayGamesPlatform.Instance.ReportScore(points, liderboardName, (bool success) =>
+                {
+                    // handle success or failure
+                    if (success)
+                    {
+                        Debug.Log("Улетел");
+                    }
+                    else
+                    {
+                        Debug.Log("Не улетел");
+                    }
+                });
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             PlayerPrefs.SetInt("Score", points);
+            Social.ReportScore(points, liderboardName, (bool success) => {
+                // handle success or failure
+            });
             Application.Quit();
         }
     }
@@ -76,6 +101,11 @@ public class ClickController : MonoBehaviour
             float height = startHeight * (float)points / levels.levels[level].difficulty;
             heartMask.sizeDelta = new Vector2(heartMask.sizeDelta.x, height);
         }       
+    }
+
+    public void GetLiderBoardBtn()
+    {
+        Social.ShowLeaderboardUI();
     }
 
     private IEnumerator ClickAnimation()
