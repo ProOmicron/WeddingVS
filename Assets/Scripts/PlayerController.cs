@@ -2,27 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WindowController : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     [SerializeField]
-    private Rigidbody2D player;
-    [SerializeField]
-    private float posY;
-
+    private Rigidbody2D rigidbody;
+    private Collider2D playerCollider;
     private void Start()
     {
-        posY = 10;
-    }
-    private void Update()
-    {
-      
+        playerCollider = rigidbody.gameObject.GetComponent<Collider2D>(); 
     }
     private void FixedUpdate()
     {
         if (Input.GetMouseButtonDown(0))
         {
             Debug.Log("click");
-            player.AddRelativeForce(new Vector2(0, 250000));
+            rigidbody.velocity = new Vector2(0,5);
         }
     }
 }
