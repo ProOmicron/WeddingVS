@@ -7,6 +7,7 @@ using GooglePlayGames;
 public class IntroSceneController : MonoBehaviour
 {
     public Text text;
+    public Text text2;
 
     void Start()
     {
@@ -33,6 +34,7 @@ public class IntroSceneController : MonoBehaviour
         {
             timer += Time.deltaTime;
             text.canvasRenderer.SetAlpha(1f - timer);
+            text2.canvasRenderer.SetAlpha(1f - timer);
             yield return null;
         }
         SceneManager.LoadScene("Main", LoadSceneMode.Single);
