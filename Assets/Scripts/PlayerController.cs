@@ -15,8 +15,14 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("click");
-            rigidbody.velocity = new Vector2(0,5);
+            rigidbody.velocity = new Vector2(0,4);
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log("collision");
+        Time.timeScale = 0;
+        PillarController.run = false;
     }
 }
