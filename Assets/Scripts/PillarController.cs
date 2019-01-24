@@ -12,6 +12,7 @@ public class PillarController : MonoBehaviour
     private float target;
     public static bool run = false;
 
+
     private void OnEnable()
     {
         if (instance == null)
@@ -30,10 +31,12 @@ public class PillarController : MonoBehaviour
     {
         if (run)
         {
-            timerPillar += Time.deltaTime;
-            step = timerPillar * speed;
-            pillar.transform.position = Vector2.MoveTowards(transform.position, new Vector2(target, pillar.transform.position.y), step);
-            if (pillar.transform.position.x == target)
+            //timerPillar += Time.deltaTime;
+            //step = timerPillar * speed;
+            //pillar.transform.position = Vector2.MoveTowards(transform.position, new Vector2(target, pillar.transform.position.y), step);
+            pillar.transform.position += new Vector3(-Time.deltaTime * speed, 0, 0);
+
+            if (pillar.transform.position.x <= target)
             {
                 Destroy(gameObject);
             }

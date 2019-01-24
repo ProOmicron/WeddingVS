@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Pillar
+  - Bonus
   layers:
   - Default
   - TransparentFX
@@ -14,7 +15,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Bonus
   - 
   - 
   - 
